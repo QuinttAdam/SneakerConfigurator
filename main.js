@@ -56,6 +56,8 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
 
   const colorPicker = document.getElementById('colorPicker');
   const colorPicker2 = document.getElementById('colorPicker2');
+  const colorPicker3 = document.getElementById('colorPicker3');
+  const colorPicker4 = document.getElementById('colorPicker4');
   
 
   colorPicker.addEventListener('input', (event) => {
@@ -66,10 +68,19 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
     const selectedColor = event.target.value;
     updateShoeColor(selectedColor, 'outside_1');
   });
+  colorPicker3.addEventListener('input', (event) => {
+    const selectedColor = event.target.value;
+    updateShoeColor(selectedColor, 'outside_2');
+  });
+  colorPicker4.addEventListener('input', (event) => {
+    const selectedColor = event.target.value;
+    updateShoeColor(selectedColor, 'sole_bottom');
+  });
   
   
   function updateShoeColor(color, partName) {
     sneaker.traverse((child) => {
+      console.log(child.name);
       if (child.isMesh && child.name === partName) {
         console.log(child.name);
         if (child.name === 'laces') {
@@ -80,7 +91,18 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
           const newColor = new THREE.Color(color);
           child.material.color.copy(newColor);
         }
+        if (child.name ==='outside_2') {
+          const newColor = new THREE.Color(color);
+          child.material.color.copy(newColor);
+          
+        }
+        if (child.name ==='sole_bottom') {
+          console.log(child.name);
+          const newColor = new THREE.Color(color);
+          child.material.color.copy(newColor);
+        }
       }
+
     });
   }
 
