@@ -55,31 +55,38 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   scene.add(directionalLight);
 
   const colorPicker = document.getElementById('colorPicker');
+  const colorPicker2 = document.getElementById('colorPicker2');
   
-  if (colorPicker) {
-    colorPicker.addEventListener('input', (event) => {
-      const selectedColor = event.target.value;
+
+  colorPicker.addEventListener('input', (event) => {
+    const selectedColor = event.target.value;
+    updateShoeColor(selectedColor, 'laces');
+  });
+  colorPicker2.addEventListener('input', (event) => {
+    const selectedColor = event.target.value;
+    updateShoeColor(selectedColor, 'outside_1');
+  });
   
-      updateShoeColor(selectedColor);
-    });
-  } else {
-    console.log('color picker not found');
-  }
   
-  
-  
-  function updateShoeColor(color) {
+  function updateShoeColor(color, partName) {
     sneaker.traverse((child) => {
-      if (child.isMesh) {
+      if (child.isMesh && child.name === partName) {
         console.log(child.name);
         if (child.name === 'laces') {
+          const newColor = new THREE.Color(color);
+          child.material.color.copy(newColor);
+        }  
+        if (child.name ==='outside_1') {
           const newColor = new THREE.Color(color);
           child.material.color.copy(newColor);
         }
       }
     });
   }
+
+
 });
+
 
 
 
