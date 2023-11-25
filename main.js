@@ -23,7 +23,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-
+scene.background = new THREE.Color(0xFAF9F6);
 
 // Orbit controls
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -43,14 +43,42 @@ gltfLoader.setDRACOLoader(draco);
 //load shoe model
 gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   gltf.scene.scale.set(10, 10, 10);
-  gltf.scene.position.set(0, -1, 0);
+  gltf.scene.position.set(0, 0, 0);
   scene.add(gltf.scene);
+
+  let sneaker = gltf.scene.children[0];
+  gltf.scene.rotateY(Math.PI / 2); // Math.PI represents 180 degrees
 
   //add light to shoe
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(1, 1, 1).normalize();
   scene.add(directionalLight);
 
+  const colorPicker = document.getElementById('colorPicker');
+  
+  if (colorPicker) {
+    colorPicker.addEventListener('input', (event) => {
+      const selectedColor = event.target.value;
+  
+      updateShoeColor(selectedColor);
+    });
+  } else {
+    console.log('color picker not found');
+  }
+  
+  
+  
+  function updateShoeColor(color) {
+    sneaker.traverse((child) => {
+      if (child.isMesh) {
+        console.log(child.name);
+        if (child.name === 'laces') {
+          const newColor = new THREE.Color(color);
+          child.material.color.copy(newColor);
+        }
+      }
+    });
+  }
 });
 
 
@@ -58,7 +86,9 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
 
 
 
-camera.position.z = 5;
+camera.position.z = 3;
+camera.position.y = 0;
+
 
 function animate() {
 	requestAnimationFrame( animate );
