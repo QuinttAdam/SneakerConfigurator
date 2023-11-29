@@ -179,14 +179,17 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
 
 
 
-camera.position.z = 4;
-camera.position.y = 1;
+camera.position.z = 3;
+camera.position.y = 1.5;
 camera.position.x = 0;
 
-//make the camera look at the shoe
-
-
-
+// dont be able to look under the cylinder
+const minHeight = cylinder.position.y + cylinder.geometry.parameters.height / 2;
+controls.maxPolarAngle = Math.PI / 2;
+controls.minDistance = minHeight + 1;
+controls.maxDistance = 10;
+controls.enablePan = false;
+controls.enableDamping = true;
 
 // add clock
 const clock = new THREE.Clock();
