@@ -57,6 +57,7 @@ scene.add( cylinder );
 
 // Orbit controls
 const controls = new OrbitControls( camera, renderer.domElement );
+controls.rotateSpeed = 0.2;
 
 
 // DRACOLoader
@@ -201,8 +202,9 @@ function animate() {
 
   camera.lookAt(sneaker.position);
 
+  controls.update();
 
 	renderer.render( scene, camera );
-}
+}  
 
 animate();
