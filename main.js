@@ -19,6 +19,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer();
+renderer.shadowMap.enabled = true;
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
@@ -38,12 +39,19 @@ scene.background = texture;
 
 
 // make new cylinder geometry
-const geometry = new THREE.CylinderGeometry( 3.5, 1.7, 1, 32 );
-const material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+const geometry = new THREE.CylinderGeometry( 3.5, 3.5, 0.3, 32 );
+const textureLoader = new THREE.TextureLoader();
+const texture2 = textureLoader.load('/textures/wood_cabinet_worn_long_rough_4k.jpg');
+const material = new THREE.MeshStandardMaterial( {map:texture2} );
 const cylinder = new THREE.Mesh( geometry, material );
-cylinder.position.set(0, -2, 0);
+cylinder.position.set(0, -1, 0);
+
+cylinder.castShadow = true;
+cylinder.receiveShadow = true;
 
 scene.add( cylinder );
+
+
 
 
 
@@ -60,21 +68,34 @@ gltfLoader.setDRACOLoader(draco);
 
 
 
-
+let sneaker;
 
 //load shoe model
 gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   gltf.scene.scale.set(10, 10, 10);
   gltf.scene.position.set(0, 0, 0);
+  gltf.scene.castShadow = true;
+  gltf.scene.receiveShadow = true;
   scene.add(gltf.scene);
 
-  let sneaker = gltf.scene.children[0];
+  
+  sneaker = gltf.scene.children[0];
   gltf.scene.rotateY(Math.PI / 2); // Math.PI represents 180 degrees
 
   //add light to shoe
-  const ambientLight = new THREE.DirectionalLight(0xffffff, 1);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   ambientLight.position.set(0, 2, 0).normalize();
   scene.add(ambientLight);
+
+
+  //add directional light to shoe
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(0, 2, 0).normalize();
+  directionalLight.castShadow = true;
+  scene.add(directionalLight);
+ 
+
+
 
   const colorPicker = document.getElementById('colorPicker');
   const colorPicker2 = document.getElementById('colorPicker2');
@@ -150,9 +171,22 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
 camera.position.z = 3;
 camera.position.y = 0;
 
+// add clock
+const clock = new THREE.Clock();
 
 function animate() {
 	requestAnimationFrame( animate );
+
+  // sneaker.position.y = Math.sin(Date.now() * 0.0001) * 0.1;
+  const elapsedTime = clock.getElapsedTime();
+  sneaker.position.y = Math.sin(elapsedTime) * 0.03;
+  
+
+  
+  
+  
+  // let sneaker animate up and down with cin
+
 
 	// cube.rotation.x += 0.01;
 	// cube.rotation.y += 0.01;
