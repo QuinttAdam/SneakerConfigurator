@@ -22,8 +22,30 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
+//load cubeTextureLoader from /cubemap
+const loader = new THREE.CubeTextureLoader();
+const texture = loader.load([
+  '/cubemap/px.png',
+  '/cubemap/nx.png',
+  '/cubemap/py.png',
+  '/cubemap/ny.png',
+  '/cubemap/pz.png',
+  '/cubemap/nz.png',
+]);
 
-scene.background = new THREE.Color(0xFAF9F6);
+//add environment map to scene
+scene.background = texture;
+
+
+// make new cylinder geometry
+const geometry = new THREE.CylinderGeometry( 3.5, 1.7, 1, 32 );
+const material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+const cylinder = new THREE.Mesh( geometry, material );
+cylinder.position.set(0, -2, 0);
+
+scene.add( cylinder );
+
+
 
 // Orbit controls
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -50,14 +72,15 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   gltf.scene.rotateY(Math.PI / 2); // Math.PI represents 180 degrees
 
   //add light to shoe
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(1, 1, 1).normalize();
-  scene.add(directionalLight);
+  const ambientLight = new THREE.DirectionalLight(0xffffff, 1);
+  ambientLight.position.set(0, 2, 0).normalize();
+  scene.add(ambientLight);
 
   const colorPicker = document.getElementById('colorPicker');
   const colorPicker2 = document.getElementById('colorPicker2');
   const colorPicker3 = document.getElementById('colorPicker3');
   const colorPicker4 = document.getElementById('colorPicker4');
+  const colorPicker5 = document.getElementById('colorPicker5');
   
 
   colorPicker.addEventListener('input', (event) => {
@@ -75,6 +98,10 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   colorPicker4.addEventListener('input', (event) => {
     const selectedColor = event.target.value;
     updateShoeColor(selectedColor, 'sole_bottom');
+  });
+  colorPicker5.addEventListener('input', (event) => {
+    const selectedColor = event.target.value;
+    updateShoeColor(selectedColor, 'sole_top');
   });
   
   
@@ -97,6 +124,11 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
           
         }
         if (child.name ==='sole_bottom') {
+          console.log(child.name);
+          const newColor = new THREE.Color(color);
+          child.material.color.copy(newColor);
+        }
+        if (child.name ==='sole_top') {
           console.log(child.name);
           const newColor = new THREE.Color(color);
           child.material.color.copy(newColor);
