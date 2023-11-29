@@ -167,18 +167,25 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.scale.set(0.5, 0.5, 0.5);
   directionalLight.position.set(0, 0.6, 0);
-  const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
+  // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
   directionalLight.castShadow = true;
 
 
   
 
-  scene.add(directionalLightHelper);
+  // scene.add(directionalLightHelper);
   scene.add(directionalLight);
 
 
-camera.position.z = 5;
-camera.position.y = 0.5;
+
+camera.position.z = 4;
+camera.position.y = 1;
+camera.position.x = 0;
+
+//make the camera look at the shoe
+
+
+
 
 // add clock
 const clock = new THREE.Clock();
@@ -192,14 +199,8 @@ function animate() {
   sneaker.position.y = Math.sin(elapsedTime) * 0.03;
   
 
-  
-  
-  
-  // let sneaker animate up and down with cin
+  camera.lookAt(sneaker.position);
 
-
-	// cube.rotation.x += 0.01;
-	// cube.rotation.y += 0.01;
 
 	renderer.render( scene, camera );
 }
