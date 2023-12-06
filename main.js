@@ -162,22 +162,12 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   ambientLight.position.set(0, 2, 0).normalize();
   scene.add(ambientLight);
 
-
-
-  //add directional light to shoe
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.scale.set(0.5, 0.5, 0.5);
-  directionalLight.position.set(0, 0.6, 0);
-  // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
-  directionalLight.castShadow = true;
-
-
+  //add point light to shoe
+  const pointLight = new THREE.PointLight(0xffffff, 8);
+  pointLight.position.set(0, 5, 0);
+  pointLight.castShadow = true;
+  scene.add(pointLight);
   
-
-  // scene.add(directionalLightHelper);
-  scene.add(directionalLight);
-
-
 
 camera.position.z = 3;
 camera.position.y = 1.5;
