@@ -84,93 +84,87 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
 
 
 
-
-  const colorPicker = document.getElementById('colorPicker');
-  const colorPicker2 = document.getElementById('colorPicker2');
-  const colorPicker3 = document.getElementById('colorPicker3');
-  const colorPicker4 = document.getElementById('colorPicker4');
-  const colorPicker5 = document.getElementById('colorPicker5');
   
 
-  colorPicker.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'laces');
+
+
+//add array with shoe parts
+
+const laces = document.getElementById('laces');
+const inside = document.getElementById('inside');
+const outside_1 = document.getElementById('outside1');
+const outside_2 = document.getElementById('outside2');
+const outside_3 = document.getElementById('outside3');
+const sole_bottom = document.getElementById('solebottom');
+const sole_top = document.getElementById('soletop');
+
+// Assuming you have an element with id 'laces' in your HTML
+const shoeParts = [
+  { element: laces, name: 'laces' },
+  { element: inside, name: 'inside' },
+  { element: outside_1, name: 'outside_1' },
+  { element: outside_2, name: 'outside_2' },
+  { element: outside_3, name: 'outside_3' },
+  { element: sole_bottom, name: 'sole_bottom' },
+  { element: sole_top, name: 'sole_top' }
+];
+
+
+const color1= document.getElementById('color1');
+const color2= document.getElementById('color2');
+const color3= document.getElementById('color3');
+const color4= document.getElementById('color4');
+const color5= document.getElementById('color5');
+
+const colorButtons = [
+  color1,
+  color2,
+  color3,
+  color4,
+  color5
+];
+
+let lastClickedColor = {};
+
+// Add event listener for color buttons outside the loop
+colorButtons.forEach((colorButton, index) => {
+  colorButton.addEventListener('click', () => {
+    console.log(`Color ${index + 1} clicked!`);
+    const selectedColor = colorButton.style.backgroundColor;
+    console.log(selectedColor);
+    // Assuming you have a selectedPart variable storing the currently selected shoe part
+    if (selectedPart) {
+      updateShoeColor(selectedColor, selectedPart);
+    }
   });
-  colorPicker2.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'outside_1');
+});
+
+let selectedPart = null;
+
+shoeParts.forEach((part) => {
+  part.element.addEventListener('click', () => {
+    console.log(`${part.name} clicked!`);
+    selectedPart = part.name; // Update the selectedPart variable
   });
-  colorPicker3.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'outside_2');
+});
+
+function updateShoeColor(color, partName) {
+  console.log(color, partName);
+  sneaker.traverse((child) => {
+    if (child.isMesh && child.name === partName) {
+      const newColor = new THREE.Color(color);
+      child.material.color.copy(newColor);
+
+      // Store last clicked color of every shoe part in an object
+      lastClickedColor[partName] = newColor;
+      console.log(lastClickedColor);
+    }
   });
-  colorPicker4.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'sole_bottom');
-  });
-  colorPicker5.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'sole_top');
-  });
-  colorPicker6.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'inside');
-  });
-  colorPicker7.addEventListener('input', (event) => {
-    const selectedColor = event.target.value;
-    updateShoeColor(selectedColor, 'outside_3');
-  });
-  
+}
 
   sneaker.traverse((child) => {
     child.castShadow = true;
   });
-
-  
-  function updateShoeColor(color, partName) {
-    sneaker.traverse((child) => {
-      console.log(child.name);
-      // child.castShadow = true;
-      if (child.isMesh && child.name === partName) {
-        console.log(child.name);
-        if (child.name === 'laces') {
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }  
-        if (child.name ==='outside_1') {
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }
-        if (child.name ==='outside_2') {
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }
-        if (child.name ==='outside_3') {
-          console.log(child.name);
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }
-        if (child.name ==='inside') {
-          console.log(child.name);
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }
-        if (child.name ==='sole_bottom') {
-          console.log(child.name);
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }
-        if (child.name ==='sole_top') {
-          console.log(child.name);
-          const newColor = new THREE.Color(color);
-          child.material.color.copy(newColor);
-        }
-      }
-
-    });
-  }
-
-
 });
 
 
@@ -207,10 +201,10 @@ function animate() {
 
   // sneaker.position.y = Math.sin(Date.now() * 0.0001) * 0.1;
   const elapsedTime = clock.getElapsedTime();
-  sneaker.position.y = Math.sin(elapsedTime) * 0.03;
+  // sneaker.position.y = Math.sin(elapsedTime) * 0.03;
   
 
-  camera.lookAt(sneaker.position);
+  // camera.lookAt(sneaker.position);
 
   controls.update();
 
