@@ -163,12 +163,18 @@ colorButtons.forEach((colorButton, index) => {
 });
 
 let selectedPart = null;
+let selectedPartElement = null;
 
 shoeParts.forEach((part) => {
   part.element.addEventListener('click', () => {
     console.log(`${part.name} clicked!`);
+    if (selectedPartElement) {
+      selectedPartElement.style.color = 'black';
+    }
     selectedPart = part.name; // Update the selectedPart variable
     
+    part.element.style.color = '#64F243'; // Change the color of the selected part text
+    selectedPartElement = part.element; // Update the selectedPartElement variable
     if(selectedPart==="laces"){
       
       gsap.to(camera.position, {
@@ -177,6 +183,10 @@ shoeParts.forEach((part) => {
         y: 2.5, 
         z: 0
       });
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
+      // change selected part text to color green
+      
     }
     if(selectedPart==="inside"){
       gsap.to(camera.position, {
@@ -185,6 +195,11 @@ shoeParts.forEach((part) => {
         y: 3, 
         z: 0
       });
+
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
+      
+      
     }
     if(selectedPart==="outside_1"){
       gsap.to(camera.position, {
@@ -193,6 +208,8 @@ shoeParts.forEach((part) => {
         y: 2, 
         z: 2.5
       });
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
     }
     if(selectedPart==="outside_2"){
       gsap.to(camera.position, {
@@ -201,6 +218,8 @@ shoeParts.forEach((part) => {
         y: 1.5, 
         z: 2
       });
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
     }
     if(selectedPart==="outside_3"){
       gsap.to(camera.position, {
@@ -209,6 +228,8 @@ shoeParts.forEach((part) => {
         y: 2.5, 
         z: 0
       });
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
     }
     if(selectedPart==="sole_bottom"){
       gsap.to(camera.position, {
@@ -217,6 +238,8 @@ shoeParts.forEach((part) => {
         y: 0, 
         z: 2
       });
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
     }
     if(selectedPart==="sole_top"){
       gsap.to(camera.position, {
@@ -225,6 +248,8 @@ shoeParts.forEach((part) => {
         y: 0.5, 
         z: 2
       });
+      document.getElementById("colorOptions").style.display = "flex";
+      document.getElementById("partShoe").innerHTML = selectedPart;
     }
   });
 });
