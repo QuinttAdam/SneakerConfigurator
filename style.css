@@ -12,6 +12,84 @@ body {
   background-color: white;
   padding: 4em;
 }
+#laces{
+  cursor: pointer;
+}
+#outside1{
+    cursor: pointer;
+}
+#outside2{
+    cursor: pointer;
+}
+#outside3{
+    cursor: pointer;
+}
+#inside{
+    cursor: pointer;
+}
+#solebottom{
+    cursor: pointer;
+}
+#soletop{
+    cursor: pointer;
+}
+
+
+#color1{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  cursor: pointer;
+  background-color: red;
+  /* display: none;
+  position: absolute;
+  top: 100%; */
+}
+#color2{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  cursor: pointer;
+  background-color: green;
+  /* display: none;
+  position: absolute;
+  top: 100%; */
+}
+#color3{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  cursor: pointer;
+  background-color: blue;
+  /* display: none;
+  position: absolute;
+  top: 100%; */
+}
+#color4{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  cursor: pointer;
+  background-color: yellow;
+  /* display: none;
+  position: absolute;
+  top: 100%; */
+}
+#color5{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  cursor: pointer;
+  background-color: orange;
+  /* display: none;
+  position: absolute;
+  top: 100%; */
+}
 
 nav {
 
