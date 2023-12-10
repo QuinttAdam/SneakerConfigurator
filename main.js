@@ -10,6 +10,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 //iport DRACOLoader
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
+//import loadingManager
+import { LoadingManager } from 'three';
+
 
 const draco = new DRACOLoader();
 draco.setDecoderConfig({ type: 'js' });
@@ -59,13 +62,33 @@ scene.add( cylinder );
 const controls = new OrbitControls( camera, renderer.domElement );
 controls.rotateSpeed = 0.2;
 
+const loadingManager = new THREE.LoadingManager();
+
+const progressBar = document.getElementById('progress-bar');
+
+loadingManager.onProgress = function (url, loaded, total) {
+  progressBar.value = (loaded / total) * 100;
+};
+
+const progressBarContainer = document.querySelector('.progress-bar-container');
+
+loadingManager.onLoad = function () {
+  progressBarContainer.style.display = 'none';
+};
+
+const gltfLoader = new GLTFLoader(loadingManager);
+
 
 // DRACOLoader
-const gltfLoader = new GLTFLoader();
+// const gltfLoader = new GLTFLoader();
 // const dracoLoader = new DRACOLoader();
 // dracoLoader.setDecoderPath('/examples/jsm/libs/draco/');
 // gltfLoader.setDRACOLoader(dracoLoader);
 gltfLoader.setDRACOLoader(draco);
+
+
+
+
 
 
 
@@ -83,7 +106,7 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
 
 
 
-
+  
 
   const colorPicker = document.getElementById('colorPicker');
   const colorPicker2 = document.getElementById('colorPicker2');
@@ -170,7 +193,7 @@ gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
     });
   }
 
-
+  animate();
 });
 
 
@@ -217,4 +240,3 @@ function animate() {
 	renderer.render( scene, camera );
 }  
 
-animate();
