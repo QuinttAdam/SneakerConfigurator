@@ -186,6 +186,8 @@ function updateShoeColor(color, partName) {
     child.castShadow = true;
   });
 
+  animate();
+
 });
 
 
@@ -222,10 +224,10 @@ function animate() {
 
   // sneaker.position.y = Math.sin(Date.now() * 0.0001) * 0.1;
   const elapsedTime = clock.getElapsedTime();
-  // sneaker.position.y = Math.sin(elapsedTime) * 0.03;
+  sneaker.position.y = Math.sin(elapsedTime) * 0.03;
   
 
-  // camera.lookAt(sneaker.position);
+  camera.lookAt(sneaker.position);
 
   controls.update();
 
