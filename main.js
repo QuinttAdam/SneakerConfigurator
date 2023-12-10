@@ -13,6 +13,9 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 //import loadingManager
 import { LoadingManager } from 'three';
 
+//import gsap
+import gsap from 'gsap';
+
 
 const draco = new DRACOLoader();
 draco.setDecoderConfig({ type: 'js' });
@@ -165,6 +168,64 @@ shoeParts.forEach((part) => {
   part.element.addEventListener('click', () => {
     console.log(`${part.name} clicked!`);
     selectedPart = part.name; // Update the selectedPart variable
+    
+    if(selectedPart==="laces"){
+      
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: 2, 
+        y: 2.5, 
+        z: 0
+      });
+    }
+    if(selectedPart==="inside"){
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: -1, 
+        y: 3, 
+        z: 0
+      });
+    }
+    if(selectedPart==="outside_1"){
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: 0, 
+        y: 2, 
+        z: 2.5
+      });
+    }
+    if(selectedPart==="outside_2"){
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: -2, 
+        y: 1.5, 
+        z: 2
+      });
+    }
+    if(selectedPart==="outside_3"){
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: 2.5, 
+        y: 2.5, 
+        z: 0
+      });
+    }
+    if(selectedPart==="sole_bottom"){
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: 0, 
+        y: 0, 
+        z: 2
+      });
+    }
+    if(selectedPart==="sole_top"){
+      gsap.to(camera.position, {
+        duration: 1, 
+        x: 0, 
+        y: 0.5, 
+        z: 2
+      });
+    }
   });
 });
 
