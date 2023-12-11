@@ -62,12 +62,13 @@ scene.add( cylinder );
 const texture3 = textureLoader.load('/textures/brown_leather_albedo_4k.jpg');
 const texture4 = textureLoader.load('/textures/fabric_pattern_07_nor_gl_4k.jpg');
 const texture5 = textureLoader.load('/textures/denim_fabric_diff_4k.jpg');
-
+const texture6 = textureLoader.load('/textures/Pattern03_4K_VarA.png');
 // make array with textures
 const textures = [
   texture3,
   texture4,
-  texture5
+  texture5,
+  texture6
 ];
 
 
@@ -157,23 +158,27 @@ const color2= document.getElementById('color2');
 const color3= document.getElementById('color3');
 const color4= document.getElementById('color4');
 const color5= document.getElementById('color5');
+const color6= document.getElementById('color6');
 
 const colorButtons = [
   color1,
   color2,
   color3,
   color4,
-  color5
+  color5,
+  color6
 ];
 
 const texture1= document.getElementById('texture1');
 const texture2= document.getElementById('texture2');
 const texture3= document.getElementById('texture3');
+const texture4= document.getElementById('texture4');
 
 const textureButtons = [
   texture1,
   texture2,
-  texture3
+  texture3,
+  texture4
 ];
 
 // const textures = {
