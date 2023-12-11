@@ -29,8 +29,37 @@
 #soletop{
     cursor: pointer;
 }
+#texturesMenu{
+  display: flex;
+  flex-direction: row;
+  gap: 3em; 
+  padding-top: 1em;
+}
+#texture1{
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  background-image: url(./public/textures/brown_leather_albedo_4k.jpg);
+}
 
-
+#texture2{
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  background-image: url(./public/textures/fabric_pattern_07_nor_gl_4k.jpg);
+}
+#texture3{
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  background-image: url(./public/textures/denim_fabric_diff_4k.jpg);;
+}
 #color1{
   width: 2em;
   height: 2em;
