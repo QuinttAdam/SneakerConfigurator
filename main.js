@@ -81,6 +81,7 @@ controls.rotateSpeed = 0.2;
 
 const loadingManager = new THREE.LoadingManager();
 
+
 const progressBar = document.getElementById('progress-bar');
 
 loadingManager.onProgress = function (url, loaded, total) {
