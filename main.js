@@ -58,6 +58,19 @@ cylinder.receiveShadow = true;
 scene.add( cylinder );
 
 
+//add texture to shoe
+const texture3 = textureLoader.load('/textures/brown_leather_albedo_4k.jpg');
+const texture4 = textureLoader.load('/textures/fabric_pattern_07_nor_gl_4k.jpg');
+const texture5 = textureLoader.load('/textures/denim_fabric_diff_4k.jpg');
+
+// make array with textures
+const textures = [
+  texture3,
+  texture4,
+  texture5
+];
+
+
 
 
 
@@ -101,6 +114,12 @@ let sneaker;
 gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   gltf.scene.scale.set(10, 10, 10);
   gltf.scene.position.set(0, 0, 0);
+  //add texture
+  // gltf.scene.traverse((child) => {
+  //   if (child.isMesh) {
+  //     child.material.map = texture3;
+  //   }
+  // });
   scene.add(gltf.scene);
 
   
@@ -124,7 +143,7 @@ const sole_top = document.getElementById('soletop');
 // Assuming you have an element with id 'laces' in your HTML
 const shoeParts = [
   { element: laces, name: 'laces' },
-  { element: inside, name: 'inside' },
+  { element: inside, name: 'inside'},
   { element: outside_1, name: 'outside_1' },
   { element: outside_2, name: 'outside_2' },
   { element: outside_3, name: 'outside_3' },
@@ -147,6 +166,22 @@ const colorButtons = [
   color5
 ];
 
+const texture1= document.getElementById('texture1');
+const texture2= document.getElementById('texture2');
+const texture3= document.getElementById('texture3');
+
+const textureButtons = [
+  texture1,
+  texture2,
+  texture3
+];
+
+// const textures = {
+//   texture1: './public/textures/brown_leather_albedo_4k.jpg',
+//   // Add more textures as needed
+// };
+
+
 let lastClickedColor = {};
 
 // Add event listener for color buttons outside the loop
@@ -158,12 +193,28 @@ colorButtons.forEach((colorButton, index) => {
     // Assuming you have a selectedPart variable storing the currently selected shoe part
     if (selectedPart) {
       updateShoeColor(selectedColor, selectedPart);
+  
+
     }
   });
 });
 
+textureButtons.forEach((textureButton, index) => {
+  textureButton.addEventListener('click', () => {
+    console.log(`Texture ${index + 1} clicked!`);
+    selectedTexture = textures[index]; // Retrieve the texture path from the array
+    if (selectedPart) {
+      updateShoeTexture(selectedTexture, selectedPart);
+    }
+  });
+});
+
+
+
 let selectedPart = null;
 let selectedPartElement = null;
+let selectedTexture = null;
+
 
 shoeParts.forEach((part) => {
   part.element.addEventListener('click', () => {
@@ -209,7 +260,7 @@ shoeParts.forEach((part) => {
         z: 2.5
       });
       document.getElementById("colorOptions").style.display = "flex";
-      document.getElementById("partShoe").innerHTML = selectedPart;
+      document.getElementById("partShoe").innerHTML = "outside 1";
     }
     if(selectedPart==="outside_2"){
       gsap.to(camera.position, {
@@ -219,7 +270,7 @@ shoeParts.forEach((part) => {
         z: 2
       });
       document.getElementById("colorOptions").style.display = "flex";
-      document.getElementById("partShoe").innerHTML = selectedPart;
+      document.getElementById("partShoe").innerHTML = "outside 2";
     }
     if(selectedPart==="outside_3"){
       gsap.to(camera.position, {
@@ -229,7 +280,7 @@ shoeParts.forEach((part) => {
         z: 0
       });
       document.getElementById("colorOptions").style.display = "flex";
-      document.getElementById("partShoe").innerHTML = selectedPart;
+      document.getElementById("partShoe").innerHTML = "outside 3";
     }
     if(selectedPart==="sole_bottom"){
       gsap.to(camera.position, {
@@ -239,7 +290,7 @@ shoeParts.forEach((part) => {
         z: 2
       });
       document.getElementById("colorOptions").style.display = "flex";
-      document.getElementById("partShoe").innerHTML = selectedPart;
+      document.getElementById("partShoe").innerHTML = "sole bottom";
     }
     if(selectedPart==="sole_top"){
       gsap.to(camera.position, {
@@ -249,7 +300,7 @@ shoeParts.forEach((part) => {
         z: 2
       });
       document.getElementById("colorOptions").style.display = "flex";
-      document.getElementById("partShoe").innerHTML = selectedPart;
+      document.getElementById("partShoe").innerHTML = "sole top";
     }
   });
 });
@@ -260,13 +311,26 @@ function updateShoeColor(color, partName) {
     if (child.isMesh && child.name === partName) {
       const newColor = new THREE.Color(color);
       child.material.color.copy(newColor);
-
+      
       // Store last clicked color of every shoe part in an object
       lastClickedColor[partName] = newColor;
       console.log(lastClickedColor);
     }
   });
 }
+
+function updateShoeTexture(selectedTexture, selectedPart) {
+  console.log(selectedTexture, selectedPart);
+  sneaker.traverse((child) => {
+    if (child.isMesh && child.name === selectedPart) {
+      child.material.map = selectedTexture; // Assign the provided texture directly
+      child.material.needsUpdate = true; // Make sure to set this to true, otherwise the texture will not update
+
+    }
+  });
+}
+
+
 
   sneaker.traverse((child) => {
     child.castShadow = true;
