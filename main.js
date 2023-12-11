@@ -223,10 +223,26 @@ textureButtons.forEach((textureButton, index) => {
     selectedTexture = textures[index];
     if (selectedPart) {
       updateShoeTexture(selectedTexture, selectedPart, textureButton.name);
+      
+      // Remove border from all texture buttons
+      textureButtons.forEach((btn) => {
+        btn.element.style.border = '2px solid white';
+      });
+      
+      // Add border to the clicked texture button
+      textureButton.element.style.border = '2px solid black';
+
+      // after clicking on the texture button again, remove the color of the border
+      if (lastClickedColor[selectedPart].texture !== textureButton.name) {
+        textureButton.element.style.border = '2px solid white';
+      }
+
+
+
+
     }
   });
 });
-
 
 
 let selectedPart = null;
@@ -344,10 +360,22 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
   console.log(selectedTexture, selectedPart, textureName);
   sneaker.traverse((child) => {
     if (child.isMesh && child.name === selectedPart) {
-      child.material.map = selectedTexture;
-      child.material.needsUpdate = true;
-      lastClickedColor[selectedPart].texture = textureName;
-      console.log(lastClickedColor);
+      const currentTexture = child.material.map;
+      
+      // If the current texture is the same as the selected one, remove the texture
+      if (currentTexture && currentTexture === selectedTexture) {
+        child.material.map = null;
+        child.material.needsUpdate = true;
+        lastClickedColor[selectedPart].texture = null;
+        console.log(lastClickedColor);
+        // change color of border to white
+      } else {
+        // Otherwise, set the selected texture
+        child.material.map = selectedTexture;
+        child.material.needsUpdate = true;
+        lastClickedColor[selectedPart].texture = textureName;
+        console.log(lastClickedColor);
+      }
     }
   });
 }
