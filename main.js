@@ -175,6 +175,7 @@ const texture3= document.getElementById('texture3');
 const texture4= document.getElementById('texture4');
 
 const textureButtons = [
+
   { element: texture1, name: 'Leather Texture' },
   { element: texture2, name: 'Fabric Pattern Texture' },
   { element: texture3, name: 'Denim Fabric Texture' },
