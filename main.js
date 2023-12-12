@@ -196,13 +196,13 @@ const textureButtons = [
 
 
 let lastClickedColor = {
-  laces: { color: 'BEE2D4', texture: null },
-  inside: { color: 'BEE2D4', texture: null },
-  outside_1: { color: 'BEE2D4', texture: null },
-  outside_2: { color: 'BEE2D4', texture: null },
-  outside_3: { color: 'BEE2D4', texture: null },
-  sole_bottom: { color: 'BEE2D4', texture: null },
-  sole_top: { color: 'BEE2D4', texture: null }
+  laces: { color: 'BEE2D4', texture: 'Standard' },
+  inside: { color: 'BEE2D4', texture: 'Standard' },
+  outside_1: { color: 'BEE2D4', texture: 'Standard' },
+  outside_2: { color: 'BEE2D4', texture: 'Standard' },
+  outside_3: { color: 'BEE2D4', texture: 'Standard' },
+  sole_bottom: { color: 'BEE2D4', texture: 'Standard' },
+  sole_top: { color: 'BEE2D4', texture: 'Standard' }
 
 
 };
@@ -377,7 +377,7 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
       if (currentTexture && currentTexture === selectedTexture) {
         child.material.map = null;
         child.material.needsUpdate = true;
-        lastClickedColor[selectedPart].texture = null;
+        lastClickedColor[selectedPart].texture = 'Standard';
         console.log(lastClickedColor);
         // change color of border to white
       } else {
