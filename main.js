@@ -116,6 +116,14 @@ let sneaker;
 gltfLoader.load('/models/Shoe_compressed.glb', (gltf) => {
   gltf.scene.scale.set(10, 10, 10);
   gltf.scene.position.set(0, 0, 0);
+
+  // add color to shoe
+  gltf.scene.traverse((child) => {
+    if (child.isMesh) {
+      child.material.color = new THREE.Color('#BEE2D4');
+    }
+  });
+
   //add texture
   // gltf.scene.traverse((child) => {
   //   if (child.isMesh) {
@@ -185,14 +193,16 @@ const textureButtons = [
 
 
 
+
+
 let lastClickedColor = {
-  laces: { color: null, texture: null },
-  inside: { color: null, texture: null },
-  outside_1: { color: null, texture: null },
-  outside_2: { color: null, texture: null },
-  outside_3: { color: null, texture: null },
-  sole_bottom: { color: null, texture: null },
-  sole_top: { color: null, texture: null }
+  laces: { color: 'BEE2D4', texture: null },
+  inside: { color: 'BEE2D4', texture: null },
+  outside_1: { color: 'BEE2D4', texture: null },
+  outside_2: { color: 'BEE2D4', texture: null },
+  outside_3: { color: 'BEE2D4', texture: null },
+  sole_bottom: { color: 'BEE2D4', texture: null },
+  sole_top: { color: 'BEE2D4', texture: null }
 
 
 };
