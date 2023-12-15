@@ -412,7 +412,7 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
       "sole_bottom_material": lastClickedColor.sole_bottom.texture,
       "sole_top_material": lastClickedColor.sole_top.texture,
 
-      "status": 'pending',
+      "status": 'Ordered',
       "user": 'user1',
       "size": 42,
       "price": 100,
