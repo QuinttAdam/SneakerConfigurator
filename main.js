@@ -16,6 +16,9 @@ import { LoadingManager } from 'three';
 //import gsap
 import gsap from 'gsap';
 
+let socket= null;
+socket = new WebSocket("ws://localhost:3000/primus");
+
 
 const draco = new DRACOLoader();
 draco.setDecoderConfig({ type: 'js' });
@@ -392,7 +395,8 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
 }
 
 
- document.querySelector(".btnTitle").addEventListener("click", function(){
+ 
+ document.querySelector(".btnTitle").addEventListener("click", async function(){
   try{
     //fetch request to send data to server
     let orderData = {
@@ -416,15 +420,26 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
       "user": 'user1',
       "size": 42,
       "price": 100,
+      
     };
 
-    fetch('http://localhost:3000/api/v1/shoes/', {
+    const response= await fetch('http://localhost:3000/api/v1/shoes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(orderData)
     });
+    if(response.ok){
+      
+      let data = await response.json();
+      console.log(data.data[0].id);
+      orderData.action="add";
+      orderData._id=data.data[0].id;
+      socket.send(JSON.stringify(orderData));
+
+    }
+    
   } catch(error){
     console.log(error);
 
