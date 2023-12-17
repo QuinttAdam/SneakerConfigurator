@@ -438,6 +438,8 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
       orderData._id=data.data[0].id;
       socket.send(JSON.stringify(orderData));
 
+      document.querySelector(".error").innerHTML = "Order placed";
+
     }
     
   } catch(error){

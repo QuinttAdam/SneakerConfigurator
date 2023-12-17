@@ -450,13 +450,20 @@ label {
   margin-bottom: 0;
 }
 
-
+.error{
+  font-size: 0.8em;
+  font-weight:bolder;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+}
 .btnTitle{
   background-color: #64F243;
   border: none;
   color: #ffffff;
   padding: 0.5em 1em;
-  margin-top: 2em;
+  margin-top: 1em;
   text-align: center;
   text-decoration: none;
   display: inline-block;
