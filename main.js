@@ -440,6 +440,8 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
 
       document.querySelector(".error").innerHTML = "Order placed";
 
+    }else{
+      document.querySelector(".error").innerHTML = "Order error";
     }
     
   } catch(error){
