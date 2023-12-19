@@ -17,12 +17,12 @@ import { LoadingManager } from 'three';
 import gsap from 'gsap';
 
 let socket= null;
-socket = new WebSocket("ws://localhost:3000/primus");
+socket = new WebSocket("wss://shoe-backend-517m.onrender.com/primus");
 
 
 const draco = new DRACOLoader();
 draco.setDecoderConfig({ type: 'js' });
-draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
+draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -423,7 +423,7 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
       
     };
 
-    const response= await fetch('http://localhost:3000/api/v1/shoes', {
+    const response= await fetch('https://shoe-backend-517m.onrender.com/api/v1/shoes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
