@@ -16,6 +16,9 @@ import { LoadingManager } from 'three';
 //import gsap
 import gsap from 'gsap';
 
+let socket= null;
+socket = new WebSocket("ws://localhost:3000/primus");
+
 
 const draco = new DRACOLoader();
 draco.setDecoderConfig({ type: 'js' });
@@ -391,6 +394,61 @@ function updateShoeTexture(selectedTexture, selectedPart, textureName) {
   });
 }
 
+
+ 
+ document.querySelector(".btnTitle").addEventListener("click", async function(){
+  try{
+    //fetch request to send data to server
+    let orderData = {
+      "laces_color": lastClickedColor.laces.color,
+      "inside_color": lastClickedColor.inside.color,
+      "outside_1_color": lastClickedColor.outside_1.color,
+      "outside_2_color": lastClickedColor.outside_2.color,
+      "outside_3_color": lastClickedColor.outside_3.color,
+      "sole_bottom_color": lastClickedColor.sole_bottom.color,
+      "sole_top_color": lastClickedColor.sole_top.color,
+
+      "laces_material": lastClickedColor.laces.texture,
+      "inside_material": lastClickedColor.inside.texture,
+      "outside_1_material": lastClickedColor.outside_1.texture,
+      "outside_2_material": lastClickedColor.outside_2.texture,
+      "outside_3_material": lastClickedColor.outside_3.texture,
+      "sole_bottom_material": lastClickedColor.sole_bottom.texture,
+      "sole_top_material": lastClickedColor.sole_top.texture,
+
+      "status": 'Ordered',
+      "user": 'user1',
+      "size": 42,
+      "price": 100,
+      
+    };
+
+    const response= await fetch('http://localhost:3000/api/v1/shoes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(orderData)
+    });
+    if(response.ok){
+      
+      let data = await response.json();
+      console.log(data.data[0].id);
+      orderData.action="add";
+      orderData._id=data.data[0].id;
+      socket.send(JSON.stringify(orderData));
+
+      document.querySelector(".error").innerHTML = "Order placed";
+
+    }else{
+      document.querySelector(".error").innerHTML = "Order error";
+    }
+    
+  } catch(error){
+    console.log(error);
+
+  }
+ });
 
 
   sneaker.traverse((child) => {
